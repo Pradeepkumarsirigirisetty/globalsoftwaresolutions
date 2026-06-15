@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Course {
+  id          Int         @id @default(autoincrement())
+  name        String
+  slug        String      @unique
+  category    String
+  description String
+  duration    String
+  level       String      @default("Beginner")
+  imageUrl    String?
+  syllabus    Json        @default("[]")
+  careerPaths Json        @default("[]")
+  eligibility String?
+  isActive    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  admissions  Admission[]
+}
+
+model Admission {
+  id             Int      @id @default(autoincrement())
+  fullName       String
+  mobile         String
+  email          String?
+  dob            String
+  qualification  String
+  address        String
+  courseId       Int
+  course         Course   @relation(fields: [courseId], references: [id])
+  preferredBatch String
+  photoUrl       String?
+  status         String   @default("pending")
+  notes          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Gallery {
+  id        Int      @id @default(autoincrement())
+  title     String?
+  imageUrl  String
+  category  String   @default("general")
+  createdAt DateTime @default(now())
+}
+
+model Testimonial {
+  id        Int      @id @default(autoincrement())
+  name      String
+  course    String
+  message   String
+  rating    Int      @default(5)
+  photoUrl  String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SiteContent {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+model SiteSettings {
+  id              Int      @id @default(autoincrement())
+  instituteName   String   @default("Global Software Solutions")
+  tagline         String   @default("Learn Skills. Build Careers.")
+  address         String   @default("Venkannapalem, Chodavaram, Andhra Pradesh")
+  phone1          String   @default("8186072193")
+  phone2          String   @default("7658968047")
+  email           String?
+  whatsapp        String?
+  facebook        String?
+  instagram       String?
+  youtube         String?
+  logoUrl         String?
+  seoTitle        String?
+  seoDescription  String?
+  updatedAt       DateTime @updatedAt
+}

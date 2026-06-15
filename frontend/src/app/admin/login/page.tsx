@@ -85,10 +85,12 @@ export default function AdminLoginPage() {
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
+          {/*
           <div className="mt-6 p-4 bg-white/5 rounded-xl border border-white/10">
             <p className="text-blue-300 text-xs font-semibold mb-1">Default credentials:</p>
             <p className="text-white/60 text-xs">admin@globalsoftware.in / Admin@123</p>
           </div>
+          */}
         </div>
       </div>
     </div>
